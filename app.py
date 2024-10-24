@@ -70,5 +70,6 @@ def predict():
 
     return jsonify({'prediction': pred_val, 'message': message, 'image_path': image_path})
 
-if __name__ == '__main__':
-    app.run()
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))  # Get the port from the environment, default to 5000 if not set
+    app.run(host="0.0.0.0", port=port)  # Bind to 0.0.0.0 to make sure it's publicly accessible
