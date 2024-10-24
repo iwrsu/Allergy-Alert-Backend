@@ -71,5 +71,4 @@ def predict():
     return jsonify({'prediction': pred_val, 'message': message, 'image_path': image_path})
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 3000))  # Adjust port for cloud deployment
-    app.run(host='0.0.0.0', port=port)
+    app.run()
