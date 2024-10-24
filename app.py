@@ -10,7 +10,6 @@ import gdown
 app = Flask(__name__)
 
 # Load the model
-# Define the model path and Google Drive file ID
 path_to_model = './model.keras'
 gdrive_id = '1SznbFPkYCgYwmDV-ffdWEcLwAcbG_cmw'
 
@@ -41,6 +40,10 @@ def predict():
     imagefile = request.files['imagefile']
     allergic_food = request.form['allergic_food']
     
+    # Create images directory if not exists
+    if not os.path.exists('./images/'):
+        os.makedirs('./images/')
+    
     # Save the uploaded image
     image_path = os.path.join('./images/', secure_filename(imagefile.filename))
     imagefile.save(image_path)
@@ -68,4 +71,5 @@ def predict():
     return jsonify({'prediction': pred_val, 'message': message, 'image_path': image_path})
 
 if __name__ == '__main__':
-    app.run(port=3000, debug=True)
+    port = int(os.environ.get('PORT', 3000))  # Adjust port for cloud deployment
+    app.run(host='0.0.0.0', port=port)
